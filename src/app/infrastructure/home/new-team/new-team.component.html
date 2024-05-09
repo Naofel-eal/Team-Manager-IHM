@@ -1,0 +1,17 @@
+<div class="new-team-container">
+    @if (freeUsers != null && freeUsers.length > 0) {
+         <div class="card flex justify-content-center">
+            <p-dropdown 
+            [options]="freeUsers" 
+            [(ngModel)]="freeUserSelected" 
+            optionLabel="email" 
+            placeholder="Selectionner le nouveau manager" />
+        </div>
+
+        <p-button label="Créer une équipe" (click)="createTeam()"></p-button>
+    }
+    @else {
+        <h2>Aucun utilisateur disponible</h2>
+    }
+</div>
+

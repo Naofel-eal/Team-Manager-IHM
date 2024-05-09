@@ -8,4 +8,5 @@ export enum ApiConstants {
     TEAM_MEMBERS = '/members',
     TEAM_CREATE = '/team/create',
     TEAM_DELETE = '/team/delete',
+    USER_FREE = '/user/free',
 }

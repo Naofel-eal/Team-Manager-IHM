@@ -1,7 +1,9 @@
 import { Team } from "../../../model/team/team";
 
 export interface ITeamReferentielService {
-    loadTeams(): void;
+    loadTeams(): Promise<Team[]>;
     getTeams(): Team[];
-    getTeam(id: number): Team | null;
+    getTeamById(id: number): Team | null;
+    getTeamByManagerEmail(managerEmail: string): Team | null;
+    createTeam(managerEmail: string): Promise<void>;
 }

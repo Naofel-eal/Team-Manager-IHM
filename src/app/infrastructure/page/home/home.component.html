@@ -1,1 +1,17 @@
-<p>home works!</p>
+<div class="home-container">
+    <h1>Equipes</h1>
+    @if (teams == null) {
+        <h2>Aucune équipe</h2>
+    }
+    @else {
+        @for (team of teams; track $index) {
+            <app-team [team]="team"></app-team>
+        }
+    }
+    <p-speedDial 
+        [model]="options" 
+        radius="120" 
+        direction="up-right"
+        type="quarter-circle" 
+    />
+</div>

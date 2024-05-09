@@ -1,0 +1,19 @@
+.home-container {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-top: 0;
+}
+
+p-speedDial {
+    position: fixed;
+    width: 4rem;
+    height: 4rem;
+    bottom: 2rem;
+    left: 2rem;
+}

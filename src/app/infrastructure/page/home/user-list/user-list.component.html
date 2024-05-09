@@ -1,0 +1,5 @@
+<div class="user-list">
+    @for (user of users; track $index) {
+        <app-user-factory [user]="user"></app-user-factory>
+    }
+</div>

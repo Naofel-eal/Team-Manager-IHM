@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   const messageService: MessageService = inject(MessageService);
+  const authenticationManager = inject(AuthenticationManager);
 
   let authReq = req;
   if (req.url != ApiConstants.BASE_URL + ApiConstants.LOGIN && req.url != ApiConstants.BASE_URL + ApiConstants.REGISTER) {
@@ -22,12 +23,12 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
-        if (err.status === 403) {
-          const authenticationManager = inject(AuthenticationManager);
+        if (err.status == 403) {
+          messageService.add({severity:'error', summary:'Error', detail: 'Token invalide'});
           authenticationManager.revokeAuthentication();
+        } else {
+          messageService.add({severity:'error', summary:'Error', detail: err.error});
         }
-
-        messageService.add({severity:'error', summary:'Error', detail: err.error});
       }
 
       return throwError(() => err); 

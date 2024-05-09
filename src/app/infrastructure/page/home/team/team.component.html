@@ -1,0 +1,5 @@
+<div class="team-container">
+    <h2>Equipe de {{team.manager.email}}</h2>
+    <app-user-factory [user]="team.manager"></app-user-factory>
+    <app-user-list [users]="team.members"></app-user-list>
+</div>
