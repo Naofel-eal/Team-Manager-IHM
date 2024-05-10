@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { IAuthenticationClient } from '../../repository/iauthentication-client';
 import { AUTHENTICATION_CLIENT_TOKEN } from '../../../../infrastructure/config/injection-token/injection-token';
 import { Router } from '@angular/router';
-import { Subscription, catchError, lastValueFrom, tap } from 'rxjs';
+import { lastValueFrom, tap } from 'rxjs';
 import { Authentication } from '../../../model/auth/authentication';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class AuthenticationManager {
     return this._authentication
   }
 
-  public set authentication(authentication: Authentication) {
+  public set authentication(authentication: Authentication | null) {
     this._authentication = authentication
     this.persistAuthentication();
   }
@@ -64,7 +64,8 @@ export class AuthenticationManager {
 
   private loadAuthentication() {
     const authenticationStr: string | null = localStorage.getItem(this._authenticationPersistenceKey);
-    const authentication: Authentication | null = authenticationStr ? JSON.parse(authenticationStr) : null;
-    this._authentication = authentication ?? null;
+    if (authenticationStr) {
+      this._authentication = JSON.parse(authenticationStr);
+    }
   }
 }

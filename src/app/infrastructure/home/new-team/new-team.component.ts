@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { USER_REFERENTIEL_SERVICE_TOKEN, USER_REPOSITORY_TOKEN } from '../../config/injection-token/injection-token';
+import { USER_SERVICE_TOKEN, USER_REPOSITORY_TOKEN } from '../../config/injection-token/injection-token';
 import { User } from '../../../core/model/user/user';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { IUserService } from '../../../core/application/service/referentiel/iuser-referentiel.service';
+import { IUserService } from '../../../core/application/service/service/iuser.service';
 
 @Component({
   selector: 'app-new-team',
@@ -20,13 +20,13 @@ export class NewTeamComponent implements OnInit{
   public freeUserSelected!: User;
 
   constructor(
-    @Inject(USER_REFERENTIEL_SERVICE_TOKEN) private _userReferentiel: IUserService,
+    @Inject(USER_SERVICE_TOKEN) private _userService: IUserService,
     private _ref: DynamicDialogRef, 
     private _messageService: MessageService
   ) {}
   
   public async ngOnInit(): Promise<void> {
-    this.freeUsers = await this._userReferentiel.loadFreeUsers();
+    this.freeUsers = await this._userService.loadFreeUsers();
   }
 
   public createTeam(): void {

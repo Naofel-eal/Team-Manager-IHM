@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { Team } from "../../../model/team/team";
-import { ITeamService } from "./iteam-referentiel.service";
+import { ITeamService } from "./iteam.service";
 import { TEAM_REPOSITORY_TOKEN } from "../../../../infrastructure/config/injection-token/injection-token";
 import { ITeamRepository } from "../../repository/iteam-respository";
 import { Observable, Subject, lastValueFrom, map } from "rxjs";

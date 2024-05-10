@@ -3,10 +3,10 @@ import { User } from '../../../../core/model/user/user';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Team } from '../../../../core/model/team/team';
-import { AUTHORIZATION_MANAGER_TOKEN, TEAM_REFERENTIEL_SERVICE_TOKEN, USER_REFERENTIEL_SERVICE_TOKEN } from '../../../config/injection-token/injection-token';
+import { AUTHORIZATION_MANAGER_TOKEN, TEAM_SERVICE_TOKEN as TEAM_SERVICE_TOKEN, USER_SERVICE_TOKEN as USER_SERVICE_TOKEN } from '../../../config/injection-token/injection-token';
 import { IAuthorizationManager } from '../../../../core/application/repository/iauthorization-manager';
-import { ITeamService } from '../../../../core/application/service/referentiel/iteam-referentiel.service';
-import { IUserService } from '../../../../core/application/service/referentiel/iuser-referentiel.service';
+import { ITeamService } from '../../../../core/application/service/service/iteam.service';
+import { IUserService } from '../../../../core/application/service/service/iuser.service';
 
 @Component({
   selector: 'app-user-factory',
@@ -24,8 +24,8 @@ export class UserFactoryComponent implements OnInit {
 
   constructor(
     @Inject(AUTHORIZATION_MANAGER_TOKEN) private _authorizationManager: IAuthorizationManager,
-    @Inject(TEAM_REFERENTIEL_SERVICE_TOKEN) private _teamService: ITeamService,
-    @Inject(USER_REFERENTIEL_SERVICE_TOKEN) private _userService: IUserService
+    @Inject(TEAM_SERVICE_TOKEN) private _teamService: ITeamService,
+    @Inject(USER_SERVICE_TOKEN) private _userService: IUserService
   ) {}
 
   public ngOnInit() {

@@ -1,21 +1,19 @@
-<p-accordionTab>
-    <ng-template pTemplate="header">
-        <div class="header">
-            <p>Equipe de {{team.manager.email}}</p>
-            @if (canDeleteTeam) {
-                <button 
-                    pButton 
-                    pRipple 
-                    type="button" 
-                    icon="pi pi-delete-left" 
-                    class="p-button-rounded p-button-danger p-button-outlined"
-                    (click)="deleteTeam()"
-                    title="Supprimer l'équipe">
-                </button>
-            }
-        </div>
-    </ng-template>
-    <ng-template pTemplate="content">
-        <app-user-list [team]="team"></app-user-list>
-    </ng-template>
-</p-accordionTab>
+<ng-template pTemplate="header">
+    <div class="header">
+        <p>Equipe de {{team.manager.email}}</p>
+        @if (canDeleteTeam) {
+            <button 
+                pButton 
+                pRipple 
+                type="button" 
+                icon="pi pi-delete-left" 
+                class="p-button-rounded p-button-danger p-button-outlined"
+                (click)="deleteTeam()"
+                title="Supprimer l'équipe">
+            </button>
+        }
+    </div>
+</ng-template>
+<ng-template pTemplate="content">
+    <app-user-list [team]="team"></app-user-list>
+</ng-template>

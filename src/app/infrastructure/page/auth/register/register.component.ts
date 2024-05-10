@@ -56,11 +56,19 @@ export class RegisterComponent {
 
   private validateData(): boolean {
     return (
-      this.firstname !== "" &&
-      this.lastname !== "" &&
+      this.validateName('Prénom', this.firstname) &&
+      this.validateName('Nom', this.lastname) &&
       this.validateEmail() &&
       this.validatePassword()
     );
+  }
+
+  private validateName(input: string, name: string): boolean {
+    const NAME_REGEX = /^[a-zA-Z]+$/;
+    const isValid: boolean = NAME_REGEX.test(name);
+    if (!isValid)
+      this.messageService.add({severity:'error', summary:'Error', detail:`${input} invalide`});
+    return isValid;
   }
 
   private validateEmail(): boolean {

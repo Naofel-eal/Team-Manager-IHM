@@ -1,6 +1,6 @@
 import { Component, DoCheck, Inject, IterableDiffer, IterableDiffers, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { AUTHORIZATION_MANAGER_TOKEN, TEAM_REFERENTIEL_SERVICE_TOKEN } from '../../config/injection-token/injection-token';
-import { ITeamService } from '../../../core/application/service/referentiel/iteam-referentiel.service';
+import { AUTHORIZATION_MANAGER_TOKEN, TEAM_SERVICE_TOKEN } from '../../config/injection-token/injection-token';
+import { ITeamService } from '../../../core/application/service/service/iteam.service';
 import { Team } from '../../../core/model/team/team';
 import { TeamFactoryComponent } from './team-factory/team-factory.component';
 import { SpeedDialModule } from 'primeng/speeddial';
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   
   constructor(
-    @Inject(TEAM_REFERENTIEL_SERVICE_TOKEN) private _teamService: ITeamService,
+    @Inject(TEAM_SERVICE_TOKEN) private _teamService: ITeamService,
     @Inject(AUTHORIZATION_MANAGER_TOKEN) private _authorizationManager: IAuthorizationManager,
     private _authenticationManager: AuthenticationManager,
     private _dialogService: DialogService,
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         icon: 'pi pi-sign-out',
         tooltipOptions: { tooltipLabel: "Déconnexion" },
         command: () => {
-          _authenticationManager.logout();
+          this._authenticationManager.logout();
         }
       },
       {

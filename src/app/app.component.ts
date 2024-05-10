@@ -10,4 +10,6 @@ import { ToastModule } from 'primeng/toast';
 })
 export class AppComponent {
   title: string = 'Team Manager'.toUpperCase();
+
+  public constructor() {}
 }

@@ -1,7 +1,9 @@
 <div class="team-list-container">
     <p-accordion>
         @for (team of teams; track trackItem) {
-            <app-team-factory [team]="team"></app-team-factory>
+            <p-accordionTab>
+                <app-team-factory [team]="team"></app-team-factory>
+            </p-accordionTab>
         }
     </p-accordion>
 </div>
