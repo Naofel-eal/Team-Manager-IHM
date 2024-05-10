@@ -44,7 +44,7 @@ describe('HomeComponent', () => {
       authentication: { user: mockUser }
     });
 
-    authorizationManagerMock = jasmine.createSpyObj('IAuthorizationManager', ['canCreateTeam'], {
+    authorizationManagerMock = jasmine.createSpyObj('IAuthorizationManager', ['canCreateTeam', 'canDeleteTeam', 'canCreateUser'], {
       canCreateTeam: () => true
     });
 
