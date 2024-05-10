@@ -1,5 +1,5 @@
 <div class="user-list">
-    @for (user of users; track $index) {
-        <app-user-factory [user]="user"></app-user-factory>
+    @for (user of team.members; track $index) {
+        <app-user-factory [user]="user" [team]="team"></app-user-factory>
     }
 </div>

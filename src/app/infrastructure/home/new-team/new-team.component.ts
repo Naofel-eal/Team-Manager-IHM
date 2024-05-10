@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { IUserReferentielService } from '../../../core/application/service/referentiel/iuser-referentiel.service';
+import { IUserService } from '../../../core/application/service/referentiel/iuser-referentiel.service';
 
 @Component({
   selector: 'app-new-team',
@@ -20,7 +20,7 @@ export class NewTeamComponent implements OnInit{
   public freeUserSelected!: User;
 
   constructor(
-    @Inject(USER_REFERENTIEL_SERVICE_TOKEN) private _userReferentiel: IUserReferentielService,
+    @Inject(USER_REFERENTIEL_SERVICE_TOKEN) private _userReferentiel: IUserService,
     private _ref: DynamicDialogRef, 
     private _messageService: MessageService
   ) {}

@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
 import { AuthenticationManager } from '../../../../core/application/service/authentication-manager/authentication-manager.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -28,10 +29,34 @@ export class LoginComponent {
   public password: string = '';
   
   public constructor(
-    private _authenticationManager: AuthenticationManager
+    private _authenticationManager: AuthenticationManager,
+    private _messageService: MessageService
   ) {}
 
   public login(): void {
-    this._authenticationManager.login(this.email, this.password);
+    if(this.validateData())
+      this._authenticationManager.login(this.email, this.password);
+  }
+
+  private validateData(): boolean {
+    return (
+      this.validateEmail() &&
+      this.validatePassword()
+    );
+  }
+
+  private validateEmail(): boolean {
+    const EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    const isValid: boolean = EMAIL_REGEX.test(this.email);
+    if (!isValid)
+      this._messageService.add({severity:'error', summary:'Error', detail:'Email invalide'});
+    return isValid;
+  }
+
+  private validatePassword(): boolean {
+    const isValid = this.password !== "";
+    if (!isValid)
+      this._messageService.add({severity:'error', summary:'Error', detail:'Mot de passe invalide'});
+    return isValid;
   }
 }

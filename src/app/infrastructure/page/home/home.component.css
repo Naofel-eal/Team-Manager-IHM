@@ -1,13 +1,16 @@
 .home-container {
     width: 100%;
-    height: 100%;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
     text-align: center;
     font-size: 2em;
-    margin-top: 0;
+    margin: 0;
 }
 
 p-speedDial {
@@ -16,4 +19,25 @@ p-speedDial {
     height: 4rem;
     bottom: 2rem;
     left: 2rem;
+}
+
+.header {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.team-list {
+    width: 50%;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+}
+.user-info > *{
+    margin: 0 1rem;
 }

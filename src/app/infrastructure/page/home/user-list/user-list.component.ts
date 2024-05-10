@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { UserFactoryComponent } from '../user-factory/user-factory.component';
-import { User } from '../../../../core/model/user/user';
+import { Team } from '../../../../core/model/team/team';
 
 @Component({
   selector: 'app-user-list',
@@ -11,7 +11,7 @@ import { User } from '../../../../core/model/user/user';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  @Input({required: true}) public users!: User[];
+  @Input({required: true}) public team!: Team;
 
   constructor() {}
 

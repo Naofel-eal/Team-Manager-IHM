@@ -1,0 +1,7 @@
+<div class="team-list-container">
+    <p-accordion>
+        @for (team of teams; track $index) {
+            <app-team-factory [team]="team"></app-team-factory>
+        }
+    </p-accordion>
+</div>

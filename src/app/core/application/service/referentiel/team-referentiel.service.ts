@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { Team } from "../../../model/team/team";
-import { ITeamReferentielService } from "./iteam-referentiel.service";
+import { ITeamService } from "./iteam-referentiel.service";
 import { TEAM_REPOSITORY_TOKEN } from "../../../../infrastructure/config/injection-token/injection-token";
 import { ITeamRepository } from "../../repository/iteam-respository";
 import { lastValueFrom, map } from "rxjs";
@@ -8,12 +8,30 @@ import { lastValueFrom, map } from "rxjs";
 @Injectable({
     providedIn: 'root'
 })
-export class TeamReferentielService implements ITeamReferentielService {
+export class TeamService implements ITeamService {
     private _teams: Team[] = [];
 
     public constructor(
         @Inject(TEAM_REPOSITORY_TOKEN) private _teamRepository: ITeamRepository
     ) {}
+
+    public async addMemberToTeam(managerEmail: string, memberEmail: string): Promise<void> {
+        const newTeam = await lastValueFrom(this._teamRepository.addMember(managerEmail, memberEmail));
+    
+        const index = this._teams.findIndex(team => team.id === newTeam.id);
+        if (index !== -1) {
+          this._teams.splice(index, 1, newTeam);
+        }
+    }
+    
+    public async removeMemberFromTeam(managerEmail: string, memberEmail: string): Promise<void> {
+        const newTeam = await lastValueFrom(this._teamRepository.removeMember(managerEmail, memberEmail));
+    
+        const index = this._teams.findIndex(team => team.id === newTeam.id);
+        if (index !== -1) {
+          this._teams.splice(index, 1, newTeam);
+        }
+    }
 
     public createTeam(managerEmail: string): Promise<void> {
         return lastValueFrom(this._teamRepository.createTeam(managerEmail));

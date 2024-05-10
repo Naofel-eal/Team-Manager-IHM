@@ -15,9 +15,20 @@ export class UserRepository implements IUserRepository {
   getFreeUsers(): Observable<any> {
     return this.http.get<any>(ApiConstants.BASE_URL + ApiConstants.USER_FREE, { headers: this.headers });
   }
+  
   createUser(firstname: string, lastname: string, email: string, password: string): Observable<any> {
-    throw new Error('Method not implemented.');
+    return this.http.post<void>(
+      ApiConstants.BASE_URL + ApiConstants.USER,
+      {
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        password: password,
+      },
+      { headers: this.headers }
+    );
   }
+
   deleteUser(userEmail: string): Observable<any> {
     throw new Error('Method not implemented.');
   }
