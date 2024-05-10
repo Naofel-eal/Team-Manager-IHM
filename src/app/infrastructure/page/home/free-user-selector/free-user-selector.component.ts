@@ -1,21 +1,21 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { USER_SERVICE_TOKEN, USER_REPOSITORY_TOKEN } from '../../config/injection-token/injection-token';
-import { User } from '../../../core/model/user/user';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { IUserService } from '../../../core/application/service/service/iuser.service';
+import { IUserService } from '../../../../core/application/service/service/iuser.service';
+import { User } from '../../../../core/model/user/user';
+import { USER_SERVICE_TOKEN } from '../../../config/injection-token/injection-token';
 
 @Component({
-  selector: 'app-new-team',
+  selector: 'app-free-user-selector',
   standalone: true,
   imports: [DropdownModule, FormsModule, ButtonModule],
-  templateUrl: './new-team.component.html',
-  styleUrl: './new-team.component.css'
+  templateUrl: './free-user-selector.component.html',
+  styleUrl: './free-user-selector.component.css'
 })
-export class NewTeamComponent implements OnInit{
+export class FreeUserSelector implements OnInit{
   public freeUsers: User[] = [];
   public freeUserSelected!: User;
 
@@ -29,7 +29,7 @@ export class NewTeamComponent implements OnInit{
     this.freeUsers = await this._userService.loadFreeUsers();
   }
 
-  public createTeam(): void {
+  public selectUser(): void {
     if (this.freeUserSelected) 
       this._ref.close(this.freeUserSelected ?? null);
     else

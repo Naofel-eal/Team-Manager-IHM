@@ -1,27 +1,47 @@
 <div class="team-list-container">
-    <p-accordion>
-        @for (team of teams; track team.id) {
-            <p-accordionTab>
-                <ng-template pTemplate="header">
-                    <div class="header">
-                        <p>Équipe de {{team.manager.email}}</p>
-                        @if (canDeleteTeam) {
-                            <button 
-                                pButton 
-                                pRipple 
-                                type="button" 
-                                icon="pi pi-delete-left" 
-                                class="p-button-rounded p-button-danger p-button-outlined"
-                                (click)="deleteTeam(team)"
-                                title="Supprimer l'équipe">
-                            </button>
-                        }
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="content">
-                    <app-team-factory [team]="team"></app-team-factory>
-                </ng-template>
-            </p-accordionTab>
-        }
-    </p-accordion>
+    @if (teams != null && teams.length > 0) {
+        <p-accordion>
+            @for (team of teams; track team.id) {
+                <p-accordionTab>
+                    <ng-template pTemplate="header">
+                        <div class="header">
+                            <p>Équipe de  {{team.manager.firstname}} {{team.manager.lastname}}</p>
+                            <div class="actions">
+                                @if (canAddMemberToTeam(team)) {
+                                    <button 
+                                        pButton 
+                                        pRipple 
+                                        type="button" 
+                                        icon="pi pi-user-plus" 
+                                        class="p-button-rounded p-button-outlined"
+                                        (click)="addMemberToTeam(team)"
+                                        title="Ajouter un membre à l'équipe">
+                                    </button>
+                                }
+                                 @if (canDeleteTeam) {
+                                    <button 
+                                        pButton 
+                                        pRipple 
+                                        type="button" 
+                                        icon="pi pi-delete-left" 
+                                        class="p-button-rounded p-button-danger p-button-outlined"
+                                        (click)="deleteTeam(team)"
+                                        title="Supprimer l'équipe">
+                                    </button>
+                                }
+                            </div>
+                           
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <app-team-factory [team]="team"></app-team-factory>
+                    </ng-template>
+                </p-accordionTab>
+            }
+        </p-accordion>
+    }
+    @else {
+        <h2>Aucune équipe.</h2>
+    }
+    
 </div>

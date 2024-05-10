@@ -5,10 +5,10 @@
             [options]="freeUsers" 
             [(ngModel)]="freeUserSelected" 
             optionLabel="email" 
-            placeholder="Selectionner le nouveau manager" />
+            placeholder="Selectionner un utilisateur" />
         </div>
 
-        <p-button label="Créer une équipe" (click)="createTeam()"></p-button>
+        <p-button label="Selectionner" (click)="selectUser()"></p-button>
     }
     @else {
         <h2>Aucun utilisateur disponible</h2>

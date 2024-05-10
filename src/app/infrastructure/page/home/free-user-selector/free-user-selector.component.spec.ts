@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewTeamComponent } from './new-team.component';
-import { User } from '../../../core/model/user/user';
-import { RoleCode } from '../../../core/model/role/roleCode';
-import { IUserService } from '../../../core/application/service/service/iuser.service';
+import { FreeUserSelector } from './free-user-selector.component';
+import { User } from '../../../../core/model/user/user';
+import { RoleCode } from '../../../../core/model/role/roleCode';
+import { IUserService } from '../../../../core/application/service/service/iuser.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { USER_SERVICE_TOKEN } from '../../config/injection-token/injection-token';
+import { USER_SERVICE_TOKEN } from '../../../config/injection-token/injection-token';
+
 
 describe('NewTeamComponent', () => {
-  let component: NewTeamComponent;
-  let fixture: ComponentFixture<NewTeamComponent>;
+  let component: FreeUserSelector;
+  let fixture: ComponentFixture<FreeUserSelector>;
   let freeUsersMock: User[] = [
     {
       firstname: 'Nao1',
@@ -37,7 +38,7 @@ describe('NewTeamComponent', () => {
     messageServiceMock = jasmine.createSpyObj<MessageService>('MessageService', ['add']);
 
     await TestBed.configureTestingModule({
-      imports: [NewTeamComponent],
+      imports: [FreeUserSelector],
       providers: [
         { provide: USER_SERVICE_TOKEN, useValue: userServiceMock },
         { provide: DynamicDialogRef, useValue: dynamicdialogRefMock },
@@ -46,7 +47,7 @@ describe('NewTeamComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NewTeamComponent);
+    fixture = TestBed.createComponent(FreeUserSelector);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

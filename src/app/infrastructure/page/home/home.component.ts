@@ -1,4 +1,4 @@
-import { Component, DoCheck, Inject, IterableDiffer, IterableDiffers, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AUTHORIZATION_MANAGER_TOKEN, TEAM_SERVICE_TOKEN } from '../../config/injection-token/injection-token';
 import { ITeamService } from '../../../core/application/service/service/iteam.service';
 import { Team } from '../../../core/model/team/team';
@@ -6,12 +6,12 @@ import { TeamFactoryComponent } from './team-factory/team-factory.component';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { AuthenticationManager } from '../../../core/application/service/authentication-manager/authentication-manager.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { NewTeamComponent } from '../../home/new-team/new-team.component';
 import { User } from '../../../core/model/user/user';
 import {AccordionModule} from 'primeng/accordion';
 import { IAuthorizationManager } from '../../../core/application/repository/iauthorization-manager';
 import { TeamListComponent } from './team-list/team-list.component';
 import { Subject, Subscription, takeUntil } from 'rxjs';
+import { FreeUserSelector } from './free-user-selector/free-user-selector.component';
 
 @Component({
   selector: 'app-home',
@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public newTeam(): void {
     this._ref = this._dialogService.open(
-      NewTeamComponent, {
+      FreeUserSelector, {
         header: "Nouvelle équipe",
         width: '50vw',
         height: '50vh',
