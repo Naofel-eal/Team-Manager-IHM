@@ -36,6 +36,8 @@ export class UserListComponent implements OnInit {
   }
 
   public async deleteUser(member: User) {
-    await this._userService.deleteUser(member.email);
+    this._userService.deleteUser(member.email).then(() => {
+      this.team.members = this.team.members.filter(m => m.email !== member.email);
+    });
   }
 }

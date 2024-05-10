@@ -12,6 +12,8 @@ import { IAuthorizationManager } from '../../../core/application/repository/iaut
 import { TeamListComponent } from './team-list/team-list.component';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { FreeUserSelector } from './free-user-selector/free-user-selector.component';
+import { RegisterFormComponent } from '../../shared/register-form/register-form.component';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     @Inject(AUTHORIZATION_MANAGER_TOKEN) private _authorizationManager: IAuthorizationManager,
     private _authenticationManager: AuthenticationManager,
     private _dialogService: DialogService,
+    private _messageService: MessageService,
   ) {
     this.loggedUser = _authenticationManager.authentication?.user;
   }
@@ -115,6 +118,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public newUser(): void {
-    alert("Nouvel utilisateur");
+    this._ref = this._dialogService.open(
+      RegisterFormComponent, {
+        header: "Nouvel utilisateur",
+        width: '50%',
+        height: '80%',
+        contentStyle: {
+          "display": "flex",
+          "flex-direction": "column",
+          "justify-content": "center",
+          "align-items": "center",
+          "overflow": "auto",
+        }
+    });
+    this._ref.onClose.subscribe((hasCreatedUser) => {
+      if (hasCreatedUser)
+        this._messageService.add({severity:'success', summary:'Succès', detail: 'Utilisateur créé avec succès'});
+    });
   }
 }

@@ -6,12 +6,12 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
-import { AuthenticationManager } from '../../../../core/application/service/authentication-manager/authentication-manager.service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { AuthenticationManager } from '../../../core/application/service/authentication-manager/authentication-manager.service';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-register-form',
   standalone: true,
   imports: [
     PasswordModule,
@@ -22,10 +22,10 @@ import { Router } from '@angular/router';
     TabViewModule,
     ButtonModule
   ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  templateUrl: './register-form.component.html',
+  styleUrl: './register-form.component.css'
 })
-export class RegisterComponent {
+export class RegisterFormComponent {
   public firstname: string = '';
   public lastname: string = '';
   public email: string = '';
@@ -35,7 +35,7 @@ export class RegisterComponent {
   constructor(
     private _authenticationManager: AuthenticationManager,
     private messageService: MessageService,
-    private _router: Router
+    private _ref: DynamicDialogRef, 
   ) {}
 
   public async register(): Promise<void> {
@@ -46,7 +46,7 @@ export class RegisterComponent {
     this._authenticationManager.register(this.firstname, this.lastname, this.email, this.password)
       .then(_ => {
         this.isLoading = false;
-        this._router.navigate(['/home']);
+        this._ref.close(true);
       })
       .catch(() => {
         this.isLoading = false;

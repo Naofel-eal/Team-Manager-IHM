@@ -30,6 +30,6 @@ export class UserRepository implements IUserRepository {
   }
 
   deleteUser(userEmail: string): Observable<void> {
-    throw new Error('Method not implemented.');
+    return this.http.delete<void>(ApiConstants.BASE_URL + ApiConstants.USER + '/' + userEmail, { headers: this.headers });
   }
 }

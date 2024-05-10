@@ -8,7 +8,7 @@ export const authGuard: CanActivateChildFn = (route, state) => {
   const currentRoute = state.url;
 
   const isAuthenticated = authenticationManager.isAuthenticated;
-  const isAuthPage = currentRoute === '/login' || currentRoute === '/register';
+  const isAuthPage = currentRoute === '/login';
 
   if (!isAuthenticated) {
     if (!isAuthPage) {
