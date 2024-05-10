@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,9 @@ import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
 import { AuthenticationManager } from '../../../../core/application/service/authentication-manager/authentication-manager.service';
 import { MessageService } from 'primeng/api';
+import { Authentication } from '../../../../core/model/auth/authentication';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -24,18 +27,31 @@ import { MessageService } from 'primeng/api';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent  {
   public email: string = '';
   public password: string = '';
-  
+  public isLoading: boolean = false;
+
   public constructor(
     private _authenticationManager: AuthenticationManager,
-    private _messageService: MessageService
+    private _messageService: MessageService,
+    private _router: Router
   ) {}
+  
+  public async login(): Promise<void> {
+    if (!this.validateData()) 
+    return;
 
-  public login(): void {
-    if(this.validateData())
-      this._authenticationManager.login(this.email, this.password);
+    this.isLoading = true;
+    this._authenticationManager.login(this.email, this.password)
+      .then(_ => {
+        this.isLoading = false;
+        this._router.navigate(['/home']);
+      })
+      .catch(() => {
+        this.isLoading = false;
+        this.password = '';
+      });
   }
 
   private validateData(): boolean {

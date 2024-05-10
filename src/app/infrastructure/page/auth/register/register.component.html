@@ -41,7 +41,8 @@
                       
                 <label for="password">Password</label>
             </p-floatLabel>
-            <p-button label="Submit" type="Submit" />
+            <p-button label="S'inscrire" type="Submit" [loading]="isLoading"/>
         </form>
+        <p>Déjà un compte ? <a href="/login">Connectez vous !</a></p>
     </div>
 </div>

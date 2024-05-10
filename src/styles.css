@@ -2,12 +2,14 @@
 @import "primeng/resources/primeng.min.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 * {
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100vh;
     width: 100vw;
     max-height: 100vh;
@@ -15,6 +17,12 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background-image: linear-gradient(to left bottom, #00bdff, #00a9ff, #0093ff, #0079ff, #005aff, #2049ff, #3a33ff, #5200ff, #6500ff, #7500ff, #8300ff, #9000ff);
+}
+
+h1 {
+    font-family: "Rubik", sans-serif;
+    text-transform: uppercase;
 }
 
 app-root {

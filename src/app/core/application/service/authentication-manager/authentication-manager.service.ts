@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { IAuthenticationClient } from '../../repository/iauthentication-client';
 import { AUTHENTICATION_CLIENT_TOKEN } from '../../../../infrastructure/config/injection-token/injection-token';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, lastValueFrom, tap } from 'rxjs';
 import { Authentication } from '../../../model/auth/authentication';
 
 @Injectable({
@@ -32,21 +32,17 @@ export class AuthenticationManager {
     return this._authentication !== null;
   }
 
-  public login(email: string, password: string): Subscription {
-    return this._authenticationClient.login(email, password)
-      .subscribe({
-        next: (response: Authentication) => {
-          this.authentication = response;
-          this._router.navigate(['/']);
-        }
-    });
+  public login(email: string, password: string): Promise<Authentication> {
+    return lastValueFrom(
+      this._authenticationClient.login(email, password)
+        .pipe(
+          tap(authentication => this.authentication = authentication)
+        )
+    );
   }
 
-  public register(firstname: string, lastname: string, email: string, password: string): Subscription {
-    return this._authenticationClient.register(firstname, lastname, email, password)
-      .subscribe({
-        next: () => this._router.navigate(['/login'])
-    });
+  public register(firstname: string, lastname: string, email: string, password: string): Promise<void> {
+    return lastValueFrom(this._authenticationClient.register(firstname, lastname, email, password));
   }
 
   public logout(): void {

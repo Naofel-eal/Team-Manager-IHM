@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   const messageService: MessageService = inject(MessageService);
   const authenticationManager = inject(AuthenticationManager);
+  const isTeamManagerKnownException = /\[[a-zA-Z]*_[0-9]*\]/;
 
   let authReq = req;
   if (req.url != ApiConstants.BASE_URL + ApiConstants.LOGIN && req.url != ApiConstants.BASE_URL + ApiConstants.REGISTER) {
@@ -24,10 +25,13 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status == 403) {
-          messageService.add({severity:'error', summary:'Error', detail: 'Token invalide'});
+          messageService.add({severity:'error', summary:'Token invalide', detail: 'Reconnectez vous.'});
           authenticationManager.revokeAuthentication();
-        } else {
-          messageService.add({severity:'error', summary:'Error', detail: err.error});
+        } else if (isTeamManagerKnownException.test(err.error)) {
+          messageService.add({severity:'error', summary:'Erreur', detail: err.error});
+        }
+        else {
+          messageService.add({severity:'error', summary:'Erreur', detail: err.statusText});
         }
       }
 

@@ -8,6 +8,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
 import { AuthenticationManager } from '../../../../core/application/service/authentication-manager/authentication-manager.service';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -29,21 +30,34 @@ export class RegisterComponent {
   public lastname: string = '';
   public email: string = '';
   public password: string = '';
+  public isLoading: boolean = false;
 
   constructor(
     private _authenticationManager: AuthenticationManager,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private _router: Router
   ) {}
 
-  public register(): void {
-    if(this.validateData())
-      this._authenticationManager.register(this.firstname, this.lastname, this.email, this.password);
+  public async register(): Promise<void> {
+    if(!this.validateData())
+      return;
+
+    this.isLoading = true;
+    this._authenticationManager.register(this.firstname, this.lastname, this.email, this.password)
+      .then(_ => {
+        this.isLoading = false;
+        this._router.navigate(['/home']);
+      })
+      .catch(() => {
+        this.isLoading = false;
+        this.password = '';
+      });
   }
 
   private validateData(): boolean {
     return (
-      this.firstname.trim() !== "" &&
-      this.lastname.trim() !== "" &&
+      this.firstname !== "" &&
+      this.lastname !== "" &&
       this.validateEmail() &&
       this.validatePassword()
     );
