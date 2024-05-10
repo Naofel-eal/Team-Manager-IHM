@@ -36,6 +36,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     private _authenticationManager: AuthenticationManager,
     private _dialogService: DialogService,
   ) {
+    this.loggedUser = _authenticationManager.authentication?.user;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  public async ngOnInit() {
+    this.initOptions();
+    this.teamsSubscription = this._teamService.teamsUpdated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (teams: Team[]) => {
+            this.teams = teams;
+        }
+    );
+
+    await this.loadTeam();
+  }
+
+  public initOptions(): void {
     this.options = [
       {
         icon: 'pi pi-sign-out',
@@ -51,32 +73,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
     ];
 
-    if (_authorizationManager.canCreateTeam()) {
+    if (this._authorizationManager.canCreateTeam()) {
       this.options.push({
         icon: 'pi pi-plus',
         tooltipOptions: { tooltipLabel: "Nouvelle équipe" },
         command: () => { this.newTeam() }
       });
+
+      if (this._authorizationManager.canCreateUser()) {
+        this.options.push({
+          icon: 'pi pi-user-plus',
+          tooltipOptions: { tooltipLabel: "Nouvel utilisateur" },
+          command: () => { this.newUser() }
+        });
     }
-
-    this.loggedUser = _authenticationManager.authentication?.user;
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  public async ngOnInit() {
-    this.teamsSubscription = this._teamService.teamsUpdated$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (teams: Team[]) => {
-            this.teams = teams;
-        }
-    );
-
-    await this.loadTeam();
+    }
   }
   
   public async loadTeam() {
@@ -101,5 +112,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.loadTeam();
       }
     });
+  }
+
+  public newUser(): void {
+    alert("Nouvel utilisateur");
   }
 }

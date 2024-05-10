@@ -1,17 +1,23 @@
 <div class="home-container">
     <div class="header">
-        <h1>Equipes</h1>
+        <h1>Team manager</h1>
         <div class="user-info">
-            <i class="pi pi-user"></i>{{loggedUser?.email}}
-            <i class="pi pi-tag"></i>{{loggedUser?.role}}
+            <i class="pi pi-user"></i>{{loggedUser!.firstname}} {{loggedUser!.lastname.toUpperCase()}}
+            <i class="pi pi-tag"></i>{{loggedUser!.role}}
         </div>
     </div>
 
-    <div class="team-list">
-        <app-team-list [teams]="teams"></app-team-list>
-   </div>
-    <p-speedDial 
+    <div class="body">
+        <div class="team-list">
+            <app-team-list [teams]="teams"></app-team-list>
+       </div>
+    </div>
+
+   <p-speedDial 
         [model]="options" 
-        direction="up"
+        radius="120" 
+        direction="up-right" 
+        type="quarter-circle" 
+        buttonClassName="p-button-contrast"
     />
 </div>

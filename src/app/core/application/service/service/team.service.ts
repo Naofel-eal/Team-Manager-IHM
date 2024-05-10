@@ -56,7 +56,7 @@ export class TeamService implements ITeamService {
             this._teamRepository.getAll().pipe(
                 map((res) => res.teams))
             );
-        
+            
         this.notifyTeamsUpdate();
         return this._teams;
     }

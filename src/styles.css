@@ -2,7 +2,7 @@
 @import "primeng/resources/primeng.min.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap');
 
 * {
     box-sizing: border-box;
@@ -21,8 +21,9 @@ body {
 }
 
 h1 {
-    font-family: "Rubik", sans-serif;
+    font-family: "Ubuntu Sans", sans-serif;
     text-transform: uppercase;
+    font-style: normal;
 }
 
 app-root {

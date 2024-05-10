@@ -1,8 +1,60 @@
 <div class="user-list">
     @if (team.members.length > 0) {
-        @for (user of team.members; track $index) {
+        <p-table 
+            [value]="team.members" 
+            [tableStyle]="{ 'min-width': '50rem' }"
+            styleClass="p-datatable-striped"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>E-Mail</th>
+                    @if (canDeleteUser || canRemvoeMemberFromTeam) {
+                        <th>Actions</th>
+                    }
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-member>
+                <tr>
+                    <td>{{ member.firstname }}</td>
+                    <td>{{ member.lastname }}</td>
+                    <td>{{ member.email }}</td>
+                    @if (canDeleteUser || canRemvoeMemberFromTeam) {
+                        <td>
+                            <div class="actions">
+                                @if (canRemvoeMemberFromTeam) {
+                                    <button 
+                                    pButton 
+                                    pRipple 
+                                    type="button" 
+                                    icon="pi pi-user-minus" 
+                                    class="p-button-rounded p-button-danger p-button-outlined"
+                                    (click)="removeMemberFromTeam(member)"
+                                    title="Supprimer de l'équipe">
+                                    </button>
+                                }
+                                @if (canDeleteUser) {
+                                    <button 
+                                    pButton 
+                                    pRipple 
+                                    type="button" 
+                                    icon="pi pi-times" 
+                                    class="p-button-rounded p-button-danger p-button-outlined"
+                                    (click)="deleteUser(member)"
+                                    title="Supprimer l'utilisateur">
+                                    </button>
+                                }                            
+                                </div>
+                            </td>
+                        }
+                </tr>
+            </ng-template>
+        </p-table>
+        
+        <!-- @for (user of team.members; track $index) {
             <app-user-factory [user]="user" [team]="team"></app-user-factory>
-        }
+        } -->
     }
     @else {
         <h3>Aucun membre dans cette équipe</h3>

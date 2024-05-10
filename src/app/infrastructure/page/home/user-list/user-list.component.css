@@ -1,6 +1,14 @@
 .user-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-center;
+}
+
+button {
+    margin: 0 0 0 5px;
 }
   

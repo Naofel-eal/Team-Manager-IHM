@@ -1,8 +1,26 @@
 <div class="team-list-container">
     <p-accordion>
-        @for (team of teams; track trackItem) {
+        @for (team of teams; track team.id) {
             <p-accordionTab>
-                <app-team-factory [team]="team"></app-team-factory>
+                <ng-template pTemplate="header">
+                    <div class="header">
+                        <p>Équipe de {{team.manager.email}}</p>
+                        @if (canDeleteTeam) {
+                            <button 
+                                pButton 
+                                pRipple 
+                                type="button" 
+                                icon="pi pi-delete-left" 
+                                class="p-button-rounded p-button-danger p-button-outlined"
+                                (click)="deleteTeam(team)"
+                                title="Supprimer l'équipe">
+                            </button>
+                        }
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="content">
+                    <app-team-factory [team]="team"></app-team-factory>
+                </ng-template>
             </p-accordionTab>
         }
     </p-accordion>
