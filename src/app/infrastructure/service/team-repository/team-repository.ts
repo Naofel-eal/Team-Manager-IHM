@@ -39,7 +39,10 @@ export class TeamRepository implements ITeamRepository{
   }
 
   deleteTeam(futureManagerEmail: string): Observable<void> {
-    throw new Error('Method not implemented.');
+    return this.http.delete<void>(
+      `${ApiConstants.BASE_URL + ApiConstants.TEAM_DELETE}/${futureManagerEmail}`, 
+      { headers: this.headers }
+    );
   }
 
 }

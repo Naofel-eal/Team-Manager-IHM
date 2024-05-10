@@ -1,5 +1,10 @@
 <div class="user-list">
-    @for (user of team.members; track $index) {
-        <app-user-factory [user]="user" [team]="team"></app-user-factory>
+    @if (team.members.length > 0) {
+        @for (user of team.members; track $index) {
+            <app-user-factory [user]="user" [team]="team"></app-user-factory>
+        }
+    }
+    @else {
+        <h3>Aucun membre dans cette équipe</h3>
     }
 </div>

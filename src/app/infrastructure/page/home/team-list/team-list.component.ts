@@ -15,4 +15,8 @@ export class TeamListComponent {
   @Input() teams: Team[] = [];
 
   public constructor() {}
+
+  public trackItem(index: number, item: Team): number {
+    return item.id;
+  }
 }

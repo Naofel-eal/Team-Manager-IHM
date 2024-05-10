@@ -29,7 +29,7 @@ export class UserRepository implements IUserRepository {
     );
   }
 
-  deleteUser(userEmail: string): Observable<any> {
+  deleteUser(userEmail: string): Observable<void> {
     throw new Error('Method not implemented.');
   }
 }

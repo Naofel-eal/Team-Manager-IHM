@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, DoCheck, Inject, IterableDiffer, IterableDiffers, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { AUTHORIZATION_MANAGER_TOKEN, TEAM_REFERENTIEL_SERVICE_TOKEN } from '../../config/injection-token/injection-token';
 import { ITeamService } from '../../../core/application/service/referentiel/iteam-referentiel.service';
 import { Team } from '../../../core/model/team/team';
@@ -11,6 +11,7 @@ import { User } from '../../../core/model/user/user';
 import {AccordionModule} from 'primeng/accordion';
 import { IAuthorizationManager } from '../../../core/application/repository/iauthorization-manager';
 import { TeamListComponent } from './team-list/team-list.component';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -20,14 +21,17 @@ import { TeamListComponent } from './team-list/team-list.component';
   providers: [DialogService],
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   public loggedUser: User | undefined;
   public teams: Team[] = [];
   public options: any[] = [];
   private _ref: DynamicDialogRef | undefined;
+  private teamsSubscription: Subscription | null = null;
+  private destroy$ = new Subject<void>();
+
   
   constructor(
-    @Inject(TEAM_REFERENTIEL_SERVICE_TOKEN) private _teamReferentielService: ITeamService,
+    @Inject(TEAM_REFERENTIEL_SERVICE_TOKEN) private _teamService: ITeamService,
     @Inject(AUTHORIZATION_MANAGER_TOKEN) private _authorizationManager: IAuthorizationManager,
     private _authenticationManager: AuthenticationManager,
     private _dialogService: DialogService,
@@ -43,7 +47,7 @@ export class HomeComponent implements OnInit {
       {
         icon: 'pi pi-refresh',
         tooltipOptions: { tooltipLabel:"Rafraichir" },
-        command: async () => { await this._teamReferentielService.loadTeams() }
+        command: async () => { this.teams = await this._teamService.loadTeams() }
       },
     ];
 
@@ -58,16 +62,28 @@ export class HomeComponent implements OnInit {
     this.loggedUser = _authenticationManager.authentication?.user;
   }
 
-  public async ngOnInit() {
-    await this.loadTeam();
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 
+  public async ngOnInit() {
+    this.teamsSubscription = this._teamService.teamsUpdated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (teams: Team[]) => {
+            this.teams = teams;
+        }
+    );
+
+    await this.loadTeam();
+  }
+  
   public async loadTeam() {
-    this.teams = await this._teamReferentielService.loadTeams();
+    this.teams = await this._teamService.loadTeams();
   }
 
   public async createTeam(manager: User): Promise<void> {
-    await this._teamReferentielService.createTeam(manager.email);
+    await this._teamService.createTeam(manager.email);
   }
 
   public newTeam(): void {
