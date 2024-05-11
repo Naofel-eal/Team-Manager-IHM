@@ -13,7 +13,7 @@ import { of, Subject } from 'rxjs';
 import { User } from '../../../core/model/user/user';
 import { RoleCode } from '../../../core/model/role/roleCode';
 import { Team } from '../../../core/model/team/team';
-import { NewTeamComponent } from '../../home/new-team/new-team.component';
+import { MessageService } from 'primeng/api';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -23,6 +23,7 @@ describe('HomeComponent', () => {
   let teamServiceMock: jasmine.SpyObj<ITeamService>;
   let dialogServiceMock: jasmine.SpyObj<DialogService>;
   let dialogRefMock: jasmine.SpyObj<DynamicDialogRef>;
+  let messageServiceMock: jasmine.SpyObj<MessageService>;
 
   const mockUser: User = {
     firstname: 'Nao',
@@ -59,13 +60,16 @@ describe('HomeComponent', () => {
     dialogServiceMock = jasmine.createSpyObj('DialogService', ['open']);
     dialogServiceMock.open.and.returnValue(dialogRefMock);
 
+    messageServiceMock = jasmine.createSpyObj('MessageService', ['add']);
+
     await TestBed.configureTestingModule({
       imports: [TeamFactoryComponent, SpeedDialModule, AccordionModule, TeamListComponent, HomeComponent],
       providers: [
         { provide: AuthenticationManager, useValue: authenticationManagerMock },
         { provide: AUTHORIZATION_MANAGER_TOKEN, useValue: authorizationManagerMock },
         { provide: TEAM_SERVICE_TOKEN, useValue: teamServiceMock },
-        { provide: DialogService, useValue: dialogServiceMock }
+        { provide: DialogService, useValue: dialogServiceMock },
+        { provide: MessageService, useValue: messageServiceMock }
       ]
     }).compileComponents();
 

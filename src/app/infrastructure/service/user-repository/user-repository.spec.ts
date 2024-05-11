@@ -78,8 +78,21 @@ describe('UserRepository', () => {
   });
 
   describe('deleteUser', () => {
-    it('should throw an error because it is not implemented', () => {
-      expect(() => service.deleteUser('john.doe@example.com')).toThrowError('Method not implemented.');
+    const oldUser = {
+      firstname: 'John',
+      lastname: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'password'
+    };
+
+    it('should make a request', () => {
+      service.deleteUser(oldUser.email).subscribe((res) => {
+        expect(res).toBeNull();
+      });
+
+      const req = httpMock.expectOne(ApiConstants.BASE_URL + ApiConstants.USER + '/' + oldUser.email);
+      expect(req.request.method).toBe('DELETE');
+      req.flush(null);
     });
   });
 });

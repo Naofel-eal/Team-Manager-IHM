@@ -54,7 +54,7 @@ export class RegisterFormComponent {
       });
   }
 
-  private validateData(): boolean {
+  public validateData(): boolean {
     return (
       this.validateName('Prénom', this.firstname) &&
       this.validateName('Nom', this.lastname) &&
