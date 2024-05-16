@@ -17,7 +17,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-image: linear-gradient(to left bottom, #00bdff, #00a9ff, #0093ff, #0079ff, #005aff, #2049ff, #3a33ff, #5200ff, #6500ff, #7500ff, #8300ff, #9000ff);
+    background: linear-gradient(110.6deg, rgb(184, 142, 252) 2.2%, rgb(104, 119, 244) 100.2%);
 }
 
 h1 {
