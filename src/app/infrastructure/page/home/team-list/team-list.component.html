@@ -14,7 +14,7 @@
                                         type="button" 
                                         icon="pi pi-user-plus" 
                                         class="p-button-rounded p-button-outlined"
-                                        (click)="addMemberToTeam(team)"
+                                        (click)="addMemberToTeam(team, $event)"
                                         title="Ajouter un membre à l'équipe">
                                     </button>
                                 }
@@ -25,7 +25,7 @@
                                         type="button" 
                                         icon="pi pi-delete-left" 
                                         class="p-button-rounded p-button-danger p-button-outlined"
-                                        (click)="deleteTeam(team)"
+                                        (click)="deleteTeam(team, $event)"
                                         title="Supprimer l'équipe">
                                     </button>
                                 }

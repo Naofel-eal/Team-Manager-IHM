@@ -36,11 +36,13 @@ export class TeamListComponent {
     return this._authorizationManager.canAddMemberToTeam(team);
   }
   
-  public deleteTeam(team: Team): void {
+  public deleteTeam(team: Team, event: Event): void {
+    event.stopPropagation();
     this._teamService.deleteTeam(team.manager.email);
   }
 
-  public addMemberToTeam(team: Team): void {
+  public addMemberToTeam(team: Team, event: Event): void {
+    event.stopPropagation();
     this._ref = this._dialogService.open(
       FreeUserSelector, {
         header: "Nouvelle équipe",
